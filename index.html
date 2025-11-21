@@ -300,7 +300,7 @@
             <div class="products-grid">
 
                 <!-- CARD 1 - EXEMPLO -->
-                <article class="product-card", id="produto-01">
+                <article class="product-card" id="produto-01" data-nome="rodo rodinho esfregão pia">
                     <img src="imagens/rodo.png" class="product-image" />
                     <!-- <div class="product-image">
                         Substitua por imagem do produto (print da Shopee)
@@ -388,27 +388,42 @@
     <script>
         function searchShopee(event) {
             event.preventDefault();
-            const query = document.getElementById("searchInput").value.trim();
+            const query = document.getElementById("searchInput").value.trim().toLowerCase();
 
-            // Se digitar "01", mostramos só o rodinho
+            // 1) Código direto → mostra só o rodinho
             if (query === "01") {
                 mostrarApenas("produto-01");
                 return;
             }
 
-            // Se digitou algo que não é código -> mostra tudo e faz busca normal
-            mostrarTodos();
-            const url = "https://shopee.com.br/search?keyword=" + encodeURIComponent(query);
-            window.open(url, "_blank");
+            // 2) Busca por nome → “rodo”, “rodinho”, “pia”, “esfregão”, etc.
+            const cards = document.querySelectorAll(".product-card");
+            let encontrou = false;
+
+            cards.forEach(card => {
+                const nomes = card.dataset.nome?.toLowerCase() || "";
+
+                if (nomes.includes(query)) {
+                    card.style.display = "block";
+                    encontrou = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            // 3) Se não encontrou nada → mostra tudo ou uma mensagem
+            if (!encontrou) {
+                mostrarTodos();
+            }
         }
 
         function mostrarApenas(idProduto) {
             const cards = document.querySelectorAll(".product-card");
             cards.forEach(card => {
                 if (card.id === idProduto) {
-                    card.style.display = "block"; // aparece
+                    card.style.display = "block";
                 } else {
-                    card.style.display = "none"; // some
+                    card.style.display = "none";
                 }
             });
         }
