@@ -380,29 +380,42 @@
             </div>
         </section>
 
-        <footer>
-            Achadinhos Essencial &mdash; curadoria minimalista para o seu lar.
-        </footer>
+            <p id="no-results" style="display:none; text-align:center; margin-top:20px; color:#f06292; font-weight:600;">
+                Nenhum produto encontrado 😕
+            </p>
+
+            <footer>
+                Achadinhos Essencial — curadoria minimalista para o seu lar.
+            </footer>
     </div>
 
     <script>
         function searchShopee(event) {
             event.preventDefault();
             const query = document.getElementById("searchInput").value.trim().toLowerCase();
+            const cards = document.querySelectorAll(".product-card");
+            const noResults = document.getElementById("no-results");
 
-            // 1) Código direto → mostra só o rodinho
+            let encontrou = false;
+
+            // Caso especial: código "01"
             if (query === "01") {
-                mostrarApenas("produto-01");
+                cards.forEach(card => {
+                    if (card.id === "produto-01") {
+                        card.style.display = "block";
+                        encontrou = true;
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+
+                noResults.style.display = encontrou ? "none" : "block";
                 return;
             }
 
-            // 2) Busca por nome → “rodo”, “rodinho”, “pia”, “esfregão”, etc.
-            const cards = document.querySelectorAll(".product-card");
-            let encontrou = false;
-
+            // Busca por palavras-chave usando data-nome
             cards.forEach(card => {
                 const nomes = card.dataset.nome?.toLowerCase() || "";
-
                 if (nomes.includes(query)) {
                     card.style.display = "block";
                     encontrou = true;
@@ -411,28 +424,20 @@
                 }
             });
 
-            // 3) Se não encontrou nada → mostra tudo ou uma mensagem
+            // Se não encontrou nada → mostra mensagem
             if (!encontrou) {
-                mostrarTodos();
+                noResults.style.display = "block";
+            } else {
+                noResults.style.display = "none";
             }
-        }
-
-        function mostrarApenas(idProduto) {
-            const cards = document.querySelectorAll(".product-card");
-            cards.forEach(card => {
-                if (card.id === idProduto) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
         }
 
         function mostrarTodos() {
             const cards = document.querySelectorAll(".product-card");
-            cards.forEach(card => {
-                card.style.display = "block";
-            });
+            const noResults = document.getElementById("no-results");
+
+            cards.forEach(card => card.style.display = "block");
+            noResults.style.display = "none";
         }
     </script>
 </body>
