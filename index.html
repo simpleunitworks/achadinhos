@@ -242,11 +242,102 @@
             text-align: center;
         }
 
+        /* Desktop / telas maiores */
         @media (min-width: 768px) {
             header {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: flex-end;
+            }
+        }
+
+        /* Ajustes específicos para celular */
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 12px 28px;
+            }
+
+            .page {
+                max-width: 100%;
+            }
+
+            header {
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+            }
+
+            .search-card {
+                padding: 14px;
+                margin-bottom: 20px;
+            }
+
+            .search-title {
+                font-size: 13px;
+            }
+
+            .search-hint {
+                font-size: 11px;
+            }
+
+            .search-input {
+                font-size: 13px;
+                padding: 8px 12px;
+            }
+
+            .search-button {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+
+            .section-title {
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;  /* 1 produto por linha no mobile */
+                gap: 14px;
+            }
+
+            .product-image {
+                height: 190px;
+            }
+
+            .product-body {
+                padding: 12px 12px 10px;
+            }
+
+            .product-title {
+                font-size: 13px;
+            }
+
+            .product-desc {
+                font-size: 11px;
+            }
+
+            .product-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .product-button {
+                width: 100%;
+                text-align: center;
+                display: inline-block;
+            }
+
+            #no-results {
+                font-size: 13px;
+                margin-top: 16px;
             }
         }
     </style>
